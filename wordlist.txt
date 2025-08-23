@@ -1,9 +1,6 @@
 # DeepRecon - Comprehensive Directory & File Wordlist
-# Compiled from: SecLists, Bug Bounty Reports, Vulnerability Findings, Real Web Applications
 # Author: r0tbin
-# Sources: HackerOne, Bugcrowd, OWASP, SecLists, GitHub, Real-world findings
 
-# Common Web Directories
 admin
 administrator
 administration
