@@ -39,6 +39,7 @@ usage() {
     echo -e "  ${WHITE}$0 -u <domain> --fuzzing --files${NC}        File fuzzing (files.txt)"
     echo -e "  ${WHITE}$0 --extract-js${NC}                 Extract JavaScript files"
     echo -e "  ${WHITE}$0 --sensible-data${NC}              Find sensitive data in JS files"
+    echo -e "  ${WHITE}$0 --reflected-chars${NC}            Check for reflected characters (XSS potential)"
     echo -e "  ${WHITE}$0 --check-tools${NC}                Verify required tools installation"
     echo ""
     echo -e "${YELLOW}Fuzzing Options:${NC}"
@@ -56,6 +57,8 @@ usage() {
     echo -e "  ${CYAN}$0 -u example.com --fuzzing -fw 50 -fc 2000${NC}"
     echo -e "  ${CYAN}$0 --extract-js${NC}"
     echo -e "  ${CYAN}$0 --sensible-data${NC}"
+    echo -e "  ${CYAN}$0 -u example.com --reflected-chars${NC}"
+    echo -e "  ${CYAN}$0 -l domains.txt --reflected-chars${NC}"
     echo -e "  ${CYAN}$0 --check-tools${NC}"
     echo ""
 }
@@ -81,7 +84,7 @@ log_warning() {
 check_tools() {
     log_info "Checking required tools installation..."
     
-    local tools=("subfinder" "amass" "assetfinder" "findomain" "jq" "curl" "httpx" "ffuf" "katana" "jsleak")
+    local tools=("subfinder" "amass" "assetfinder" "findomain" "jq" "curl" "httpx" "ffuf" "katana" "jsleak" "urlfinder" "kxss")
     local missing_tools=()
     local all_installed=true
     
@@ -300,6 +303,50 @@ find_sensitive_data() {
     log_success "Sensitive data analysis completed!"
 }
 
+# Check for reflected characters (XSS potential)
+check_reflected_chars() {
+    local domain="$1"
+    local list_file="$2"
+    
+    if [ -z "$domain" ] && [ -z "$list_file" ]; then
+        log_error "Domain (-u) or list file (-l) is required for reflected characters check"
+        usage
+        exit 1
+    fi
+    
+    if [ -n "$domain" ]; then
+        # Single domain
+        log_info "Checking reflected characters for domain: $domain"
+        echo ""
+        log_info "Running urlfinder and kxss to find potential XSS vulnerabilities..."
+        echo ""
+        
+        urlfinder -d "$domain" | grep "=" | kxss | grep --color "\"\'\>\<"
+        
+        log_success "Reflected characters analysis completed for $domain"
+        
+    elif [ -n "$list_file" ]; then
+        # List of domains
+        if [ ! -f "$list_file" ]; then
+            log_error "List file not found: $list_file"
+            exit 1
+        fi
+        
+        log_info "Checking reflected characters for domains in: $list_file"
+        echo ""
+        
+        while read -r domain; do
+            if [ -n "$domain" ]; then
+                echo "[*] Processing $domain"
+                urlfinder -d "$domain" | grep "=" | kxss | grep --color "\"\'\>\<"
+                echo ""
+            fi
+        done < "$list_file"
+        
+        log_success "Reflected characters analysis completed for all domains"
+    fi
+}
+
 # Main function
 main() {
     show_banner
@@ -310,11 +357,16 @@ main() {
     local fuzzing_type=""
     local filter_words=""
     local filter_chars=""
+    local list_file=""
     
     while [[ $# -gt 0 ]]; do
         case $1 in
             -u|--url)
                 domain="$2"
+                shift 2
+                ;;
+            -l|--list)
+                list_file="$2"
                 shift 2
                 ;;
             --subdomains)
@@ -389,6 +441,10 @@ main() {
                 action="sensible-data"
                 shift
                 ;;
+            --reflected-chars)
+                action="reflected-chars"
+                shift
+                ;;
             --check-tools)
                 action="check-tools"
                 shift
@@ -431,6 +487,9 @@ main() {
             ;;
         "sensible-data")
             find_sensitive_data
+            ;;
+        "reflected-chars")
+            check_reflected_chars "$domain" "$list_file"
             ;;
         "check-tools")
             check_tools

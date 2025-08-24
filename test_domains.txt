@@ -1,0 +1,3 @@
+example.com
+testphp.vulnweb.com
+demo.testfire.net
