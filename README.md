@@ -31,7 +31,7 @@ Before using DeepRecon, ensure the following tools are installed:
 - **httpx** - Fast and multi-purpose HTTP toolkit
 - **ffuf** - Fast web fuzzer
 - **katana** - Next-generation crawling and spidering framework
-- **jsleaks** - JavaScript secrets finder
+- **jsleak** - JavaScript secrets finder
 
 ### System Tools
 - **jq** - JSON processor
@@ -70,8 +70,8 @@ go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 go install -v github.com/ffuf/ffuf/v2@latest
 go install -v github.com/projectdiscovery/katana/cmd/katana@latest
 
-# Install jsleaks
-npm install -g jsleaks
+# Install jsleak
+npm install -g jsleak
 ```
 
 #### Arch Linux
@@ -79,8 +79,8 @@ npm install -g jsleaks
 # Install from AUR
 yay -S subfinder amass assetfinder findomain httpx ffuf katana
 
-# Install jsleaks
-npm install -g jsleaks
+# Install jsleak
+npm install -g jsleak
 ```
 
 #### macOS
@@ -89,8 +89,8 @@ npm install -g jsleaks
 brew install jq curl
 brew install subfinder amass assetfinder findomain httpx ffuf katana
 
-# Install jsleaks
-npm install -g jsleaks
+# Install jsleak
+npm install -g jsleak
 ```
 
 ## 🚀 Usage
@@ -368,7 +368,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Tom Hudson** - For assetfinder
 - **Eduard Tolosa** - For findomain
 - **Joona Hoikkala** - For ffuf
-- **jsleaks contributors** - For JavaScript security analysis
+- **jsleak contributors** - For JavaScript security analysis
 
 ## 📞 Contact
 

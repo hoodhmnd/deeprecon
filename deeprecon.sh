@@ -34,15 +34,26 @@ usage() {
     echo -e "${YELLOW}Usage:${NC}"
     echo -e "  ${WHITE}$0 -u <domain> --subdomains${NC}     Enumerate subdomains"
     echo -e "  ${WHITE}$0 --alive${NC}                      Check alive subdomains"
-    echo -e "  ${WHITE}$0 -u <domain> --fuzzing${NC}        Directory/file fuzzing"
+    echo -e "  ${WHITE}$0 -u <domain> --fuzzing${NC}        Directory/file fuzzing (default wordlist)"
+    echo -e "  ${WHITE}$0 -u <domain> --fuzzing --directories${NC}  Directory fuzzing (directories.txt)"
+    echo -e "  ${WHITE}$0 -u <domain> --fuzzing --files${NC}        File fuzzing (files.txt)"
     echo -e "  ${WHITE}$0 --extract-js${NC}                 Extract JavaScript files"
     echo -e "  ${WHITE}$0 --sensible-data${NC}              Find sensitive data in JS files"
     echo -e "  ${WHITE}$0 --check-tools${NC}                Verify required tools installation"
+    echo ""
+    echo -e "${YELLOW}Fuzzing Options:${NC}"
+    echo -e "  ${WHITE}-fw <number>${NC}                    Filter by word count (max words in response)"
+    echo -e "  ${WHITE}-fc <number>${NC}                    Filter by character count (max chars in response)"
     echo ""
     echo -e "${YELLOW}Examples:${NC}"
     echo -e "  ${CYAN}$0 -u example.com --subdomains${NC}"
     echo -e "  ${CYAN}$0 --alive${NC}"
     echo -e "  ${CYAN}$0 -u example.com --fuzzing${NC}"
+    echo -e "  ${CYAN}$0 -u example.com --fuzzing --directories${NC}"
+    echo -e "  ${CYAN}$0 -u example.com --fuzzing --files${NC}"
+    echo -e "  ${CYAN}$0 -u example.com --fuzzing --directories -fw 100${NC}"
+    echo -e "  ${CYAN}$0 -u example.com --fuzzing --files -fc 5000${NC}"
+    echo -e "  ${CYAN}$0 -u example.com --fuzzing -fw 50 -fc 2000${NC}"
     echo -e "  ${CYAN}$0 --extract-js${NC}"
     echo -e "  ${CYAN}$0 --sensible-data${NC}"
     echo -e "  ${CYAN}$0 --check-tools${NC}"
@@ -70,7 +81,7 @@ log_warning() {
 check_tools() {
     log_info "Checking required tools installation..."
     
-    local tools=("subfinder" "amass" "assetfinder" "findomain" "jq" "curl" "httpx" "ffuf" "katana" "jsleaks")
+    local tools=("subfinder" "amass" "assetfinder" "findomain" "jq" "curl" "httpx" "ffuf" "katana" "jsleak")
     local missing_tools=()
     local all_installed=true
     
@@ -177,6 +188,9 @@ check_alive() {
 # Directory/file fuzzing
 run_fuzzing() {
     local domain="$1"
+    local fuzzing_type="$2"
+    local filter_words="$3"
+    local filter_chars="$4"
     
     if [ -z "$domain" ]; then
         log_error "Domain is required for fuzzing"
@@ -184,10 +198,31 @@ run_fuzzing() {
         exit 1
     fi
     
-    # Check if wordlist exists
-    if [ ! -f "wordlist.txt" ]; then
-        log_warning "wordlist.txt not found. Creating a basic wordlist..."
-        cat > wordlist.txt << 'EOF'
+    # Determine which wordlist to use
+    local wordlist_file=""
+    case "$fuzzing_type" in
+        "directories")
+            wordlist_file="directories.txt"
+            log_info "Using directories wordlist for directory fuzzing"
+            ;;
+        "files")
+            wordlist_file="files.txt"
+            log_info "Using files wordlist for file fuzzing"
+            ;;
+        *)
+            wordlist_file="wordlist.txt"
+            log_info "Using default wordlist for general fuzzing"
+            ;;
+    esac
+    
+    # Check if the selected wordlist exists
+    if [ ! -f "$wordlist_file" ]; then
+        if [ "$fuzzing_type" = "directories" ] || [ "$fuzzing_type" = "files" ]; then
+            log_error "$wordlist_file not found. Please ensure the file exists."
+            exit 1
+        else
+            log_warning "wordlist.txt not found. Creating a basic wordlist..."
+            cat > wordlist.txt << 'EOF'
 admin
 api
 app
@@ -208,13 +243,29 @@ index.php
 admin.php
 config.php
 EOF
-        log_info "Basic wordlist created. You can replace it with a more comprehensive one."
+            log_info "Basic wordlist created. You can replace it with a more comprehensive one."
+        fi
     fi
     
-    log_info "Starting directory/file fuzzing for: $domain"
-    ffuf -w wordlist.txt -u "http://$domain/FUZZ" -recursion -recursion-depth 2
+    # Build ffuf command with filters
+    local ffuf_cmd="ffuf -w \"$wordlist_file\" -u \"http://$domain/FUZZ\" -recursion -recursion-depth 2"
     
-    log_success "Fuzzing completed for $domain"
+    if [ -n "$filter_words" ]; then
+        ffuf_cmd="$ffuf_cmd -fw $filter_words"
+        log_info "Filtering responses with max $filter_words words"
+    fi
+    
+    if [ -n "$filter_chars" ]; then
+        ffuf_cmd="$ffuf_cmd -fc $filter_chars"
+        log_info "Filtering responses with max $filter_chars characters"
+    fi
+    
+    log_info "Starting $fuzzing_type fuzzing for: $domain using $wordlist_file"
+    log_info "Command: $ffuf_cmd"
+    
+    eval "$ffuf_cmd"
+    
+    log_success "Fuzzing completed for $domain using $wordlist_file"
 }
 
 # Extract JavaScript files
@@ -243,8 +294,8 @@ find_sensitive_data() {
         exit 1
     fi
     
-    log_info "Running jsleaks to find sensitive data..."
-    cat alive_js.txt | jsleaks -s -l -k
+    log_info "Running jsleak to find sensitive data..."
+    cat alive_js.txt | jsleak -s -l -k
     
     log_success "Sensitive data analysis completed!"
 }
@@ -256,6 +307,9 @@ main() {
     # Parse command line arguments
     local domain=""
     local action=""
+    local fuzzing_type=""
+    local filter_words=""
+    local filter_chars=""
     
     while [[ $# -gt 0 ]]; do
         case $1 in
@@ -274,6 +328,58 @@ main() {
             --fuzzing)
                 action="fuzzing"
                 shift
+                ;;
+            --directories)
+                if [ "$action" = "fuzzing" ]; then
+                    fuzzing_type="directories"
+                else
+                    log_error "--directories can only be used with --fuzzing"
+                    usage
+                    exit 1
+                fi
+                shift
+                ;;
+            --files)
+                if [ "$action" = "fuzzing" ]; then
+                    fuzzing_type="files"
+                else
+                    log_error "--files can only be used with --fuzzing"
+                    usage
+                    exit 1
+                fi
+                shift
+                ;;
+            -fw)
+                if [ "$action" = "fuzzing" ]; then
+                    if [[ "$2" =~ ^[0-9]+$ ]]; then
+                        filter_words="$2"
+                        shift 2
+                    else
+                        log_error "-fw requires a numeric value"
+                        usage
+                        exit 1
+                    fi
+                else
+                    log_error "-fw can only be used with --fuzzing"
+                    usage
+                    exit 1
+                fi
+                ;;
+            -fc)
+                if [ "$action" = "fuzzing" ]; then
+                    if [[ "$2" =~ ^[0-9]+$ ]]; then
+                        filter_chars="$2"
+                        shift 2
+                    else
+                        log_error "-fc requires a numeric value"
+                        usage
+                        exit 1
+                    fi
+                else
+                    log_error "-fc can only be used with --fuzzing"
+                    usage
+                    exit 1
+                fi
                 ;;
             --extract-js)
                 action="extract-js"
@@ -318,7 +424,7 @@ main() {
                 usage
                 exit 1
             fi
-            run_fuzzing "$domain"
+            run_fuzzing "$domain" "$fuzzing_type" "$filter_words" "$filter_chars"
             ;;
         "extract-js")
             extract_js
